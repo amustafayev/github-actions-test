@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v5
+      - uses: actions/checkout@v2
         with:
-          script: console.log(context)
+          script: |
+          if(context.payload.pull_request.title == "" || context.payload.pull_request.description == ""){
+            core.setFailed('Description or title are null!')
+          }
+
+          console.log(context)
 
