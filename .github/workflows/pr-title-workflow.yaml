@@ -14,8 +14,24 @@ jobs:
       - uses: actions/checkout@v2
         with:
           script: |
-          if(context.payload.pull_request.title == "" || context.payload.pull_request.description == ""){
-            core.setFailed('Description or title are null!')
+          if(context.payload.pull_request.title == "" ){
+
+            github.rest.pulls.createReviewComment({
+                owner: context.repo.owner,
+                epo: context.repo.repo,
+                body: 'Title is empty',
+                pull_number: context.pull_request.number
+              });
+            # core.setFailed('Description or title are null!')
+          }
+
+          if(context.payload.pull_request.description == ""){
+              github.rest.pulls.createReviewComment({
+                owner: context.repo.owner,
+                epo: context.repo.repo,
+                body: 'Descr is empty',
+                pull_number: context.pull_request.number
+              });
           }
 
           console.log(context)
