@@ -1,6 +1,6 @@
 name: PR Scripts
 
-on: [pull_request]
+on: [push,pull_request]
   # pull_request:
   #   types:
   #     - opened
