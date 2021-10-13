@@ -1,11 +1,9 @@
-name: PR Scripts
+name: Testing
 
 on:
-  pull_request:
-    types:
-      - opened
-      - edited
-      - synchronize
+  issues:
+    types: [opened,edited,synchronize]
+
 jobs:
   comment:
     runs-on: ubuntu-latest
@@ -14,13 +12,37 @@ jobs:
         with:
           script: |
             github.rest.pulls.createReviewComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: 'Title is empty',
-                  pull_number: context.pull_request.number
-                });
-                console.log(context)
-                core.setFailed('Description or title are null!')
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: 'Title is empty',
+                pull_number: context.pull_request.number
+              });
+              console.log(context)
+
+
+# name: PR Scripts
+
+# on:
+#   pull_request:
+#     types:
+#       - opened
+#       - edited
+#       - synchronize
+# jobs:
+#   comment:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/github-script@v5
+#         with:
+#           script: |
+#             github.rest.pulls.createReviewComment({
+#                   owner: context.repo.owner,
+#                   repo: context.repo.repo,
+#                   body: 'Title is empty',
+#                   pull_number: context.pull_request.number
+#                 });
+#                 console.log(context)
+#                 core.setFailed('Description or title are null!')
            
 
 
