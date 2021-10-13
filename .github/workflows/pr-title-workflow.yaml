@@ -1,16 +1,16 @@
 name: PR Scripts
 
-on: [push,pull_request]
-  # pull_request:
-  #   types:
-  #     - opened
-  #     - edited
-
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
 jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/github-script@v5
         with:
           script: |
             github.rest.pulls.createReviewComment({
