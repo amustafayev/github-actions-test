@@ -12,13 +12,14 @@ jobs:
         with:
           script: |
             console.log(context.payload.pull_request.number) 
+             github.rest.pulls.createReviewComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: 'Title is empty',
+                pull_number: context.payload.pull_request.number
+              });
 
-#  github.rest.pulls.createReviewComment({
-#                 owner: context.repo.owner,
-#                 repo: context.repo.repo,
-#                 body: 'Title is empty',
-#                 pull_number: context.pull_request.number
-#               });
+
 
 # name: PR Scripts
 
