@@ -1,0 +1,60 @@
+name: Testing
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })
+
+
+
+
+# name: PR Scripts
+
+# on: [push, pull_request]
+#   # pull_request:
+#   #   types:
+#   #     - opened
+#   #     - edited
+
+# jobs:
+#   comment:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/github-script@v5
+#       - uses: actions/checkout@v2
+#         with:
+#           script: |
+#           if(context.payload.pull_request.title == "" ){
+
+#             github.rest.pulls.createReviewComment({
+#                 owner: context.repo.owner,
+#                 epo: context.repo.repo,
+#                 body: 'Title is empty',
+#                 pull_number: context.pull_request.number
+#               });
+#             # core.setFailed('Description or title are null!')
+#           }
+
+#           if(context.payload.pull_request.description == ""){
+#               github.rest.pulls.createReviewComment({
+#                 owner: context.repo.owner,
+#                 epo: context.repo.repo,
+#                 body: 'Descr is empty',
+#                 pull_number: context.pull_request.number
+#               });
+#           }
+
+#           console.log(context)
