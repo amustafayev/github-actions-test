@@ -11,6 +11,7 @@ jobs:
       - uses: actions/github-script@v5
         with:
           script: |
+            console.log(context)
             console.log(context.payload.pull_request.number) 
              github.rest.pulls.createReviewComment({
                 owner: context.repo.owner,
