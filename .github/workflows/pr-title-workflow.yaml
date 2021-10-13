@@ -19,7 +19,7 @@ jobs:
                 repo: context.repo.repo,
                 body: 'Description is empty'
               })
-            }
+            } 
             
 
 
