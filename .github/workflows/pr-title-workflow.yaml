@@ -19,10 +19,19 @@ jobs:
                 repo: context.repo.repo,
                 body: 'There is not enough file to create pr'
               })
+              
+              core.setFailed('Failed!')
             } 
-            core.setFailed('Failed!')
+            
                
 
+# https://github.com/actions/github-script#comment-on-an-issue
+
+# https://github.com/actions/github-script/blob/main/.github/workflows/pull-request-test.yml
+
+# https://github.com/marketplace/actions/github-script
+
+# https://octokit.github.io/rest.js/v18#pulls-get-review-comment
 
 
 
