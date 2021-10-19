@@ -34,7 +34,7 @@ jobs:
                 })
             
                 core.setFailed('Workflow Failed!') 
-            }
+            } 
              
             
 
