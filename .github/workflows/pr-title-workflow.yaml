@@ -33,7 +33,7 @@ jobs:
                     body: 'Title is not in a correct format'
                 })
             
-                core.setFailed('Workflow Failed!')
+                core.setFailed('Workflow Failed!') 
             }
              
             
