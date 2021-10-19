@@ -1,4 +1,4 @@
-name: Testing comments
+name: pr-check
 
 on: 
   pull_request:
