@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Prints the current branch name
-        run: echo "${GITHUB_REF#refs/heads/}"
-        
+        run: echo "${GITHUB_REF##*/}"
+
       - uses: actions/github-script@v5
         with:
           script: |
