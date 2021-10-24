@@ -8,11 +8,11 @@ jobs:
   welcome:
     runs-on: ubuntu-latest
     steps:
+      run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
       - uses: actions/github-script@v5
         with:
           script: |
-            console.log(context)
-            console.log(${GITHUB_REF##*/})
+            console.log($BRANCH_NAME)
             if(context.payload.pull_request.changed_files > 40){
                 await github.rest.issues.createComment({
                         issue_number: context.issue.number,
