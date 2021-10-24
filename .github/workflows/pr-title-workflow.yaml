@@ -14,7 +14,7 @@ jobs:
       - uses: actions/github-script@v5
         with:
           script: |
-            console.log(github.head_ref)
+            console.log(context.payload.pull_request.head.ref)
             if(context.payload.pull_request.changed_files > 40){
                 await github.rest.issues.createComment({
                         issue_number: context.issue.number,
