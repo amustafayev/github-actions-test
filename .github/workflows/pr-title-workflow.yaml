@@ -5,7 +5,7 @@ on:
     types: [opened,edited,synchronize]
 
 jobs:
-  welcome:
+  title:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/github-script@v5
@@ -51,7 +51,52 @@ jobs:
               })
               core.setFailed('Workflow Failed!') 
           }
+  title:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/github-script@v5
+      with:
+        script: |
+          console.log(context)
+          const MAIN_BRANCH = "main"
+          if(context.payload.pull_request.changed_files > 40){
+              await github.rest.issues.createComment({
+                      issue_number: context.issue.number,
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      body: 'There is so many files to create pr'
+              })
+              
+              core.setFailed('Workflow Failed!')
+          }
 
+
+          var regex = new RegExp(/^(^[A-Z]+)-(\d+):([ A-z1-9\.\,]+)$/);
+
+          if(context.payload.pull_request.base.ref == MAIN_BRANCH){
+              regex = new RegExp(/^RELEASE$/);
+          }
+
+          if(regex.test(context.payload.pull_request.title)==false){
+              await github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: 'Title is not in a correct format'
+              })
+          
+              core.setFailed('Workflow Failed!') 
+          }
+          console.log(context.payload.pull_request.body)
+          if (context.payload.pull_request.body == null){
+            await github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: 'PR Body can not be empty!'
+              })
+              core.setFailed('Workflow Failed!') 
+          }
             
 
 #https://github.com/marketplace/actions/get-current-pull-request
