@@ -41,7 +41,7 @@ jobs:
           
               core.setFailed('Workflow Failed!') 
           }
-
+          console.log(context.payload.pull_request.body)
           if (context.payload.pull_request.body == ""){
             await github.rest.issues.createComment({
                   issue_number: context.issue.number,
