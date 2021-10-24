@@ -14,7 +14,7 @@ jobs:
       - uses: actions/github-script@v5
         with:
           script: |
-            console.log(context)
+            console.log(context.base)
             console.log(context.payload.pull_request.head.ref)
             console.log($GITHUB_HEAD_REF)
             if(context.payload.pull_request.changed_files > 40){
