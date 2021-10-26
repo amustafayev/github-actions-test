@@ -1,6 +1,9 @@
 
 
-module.exports = async ({github, context, core}) => {
+module.exports = ({github, context, core}) => {
+
+
+    
 
     const MAIN_BRANCH = "main"
     const FILE_LIMIT_EXCEED = 'There is so many files to create pr'
