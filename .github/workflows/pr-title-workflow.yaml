@@ -12,5 +12,5 @@ jobs:
     - uses: actions/github-script@v5
       with:
         script: |
-          const script = require('./.github/workflows/script.js')
-          async script({github, context})
+          const script = require('./.github/workflows/script.js');
+          script({github, context});

@@ -18,7 +18,7 @@ module.exports = ({github, context, core}) => {
     }
 
     if(context.payload.pull_request.changed_files > MAX_CHANGED_FILES){
-        await github.rest.issues.createComment({
+        github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -29,7 +29,7 @@ module.exports = ({github, context, core}) => {
     }
 
     if(REGEX.test(context.payload.pull_request.title)==false){
-        await github.rest.issues.createComment({
+        github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
@@ -40,7 +40,7 @@ module.exports = ({github, context, core}) => {
     }
 
     if (context.payload.pull_request.body == null){
-      await github.rest.issues.createComment({
+      github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
