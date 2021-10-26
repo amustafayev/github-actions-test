@@ -13,4 +13,4 @@ jobs:
       with:
         script: |
           const script = require('./.github/workflows/script.js');
-          script({github, context});
+          script({github, context, core});
