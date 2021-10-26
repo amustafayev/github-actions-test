@@ -1,37 +1,41 @@
 
 
-module.exports = ({github, context,core}) => {
+module.exports = ({github, context, core}) => {
     
-
     cconsole.log(context)
-    
+
     const MAIN_BRANCH = "main"
-    if(context.payload.pull_request.changed_files > 40){
+    const FILE_LIMIT_EXCEED = 'There is so many files to create pr'
+    const TITLE_FORMAT_ERROR = 'Title is not in a correct format'
+    const PR_BODY_EMPTY_ERROR = 'PR Body can not be empty!'
+    const MAX_CHANGED_FILES = 40
+    const MASTER_TITLE_REGEX = new RegExp(/^RELEASE$/) 
+    var REGEX = new RegExp(/^(^[A-Z]+)-(\d+):([ A-z1-9\.\,]+)$/);
+
+    if(context.payload.pull_request.base.ref == MAIN_BRANCH){
+        REGEX = MASTER_TITLE_REGEX;
+    }
+
+    if(context.payload.pull_request.changed_files > MAX_CHANGED_FILES){
         await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: 'There is so many files to create pr'
+                body: FILE_LIMIT_EXCEED
         })
         
-        core.setFailed('Workflow Failed!')
+        core.setFailed('❌Workflow Failed! cause: '+ FILE_LIMIT_EXCEED)
     }
 
-    var regex = new RegExp(/^(^[A-Z]+)-(\d+):([ A-z1-9\.\,]+)$/);
-
-    if(context.payload.pull_request.base.ref == MAIN_BRANCH){
-        regex = new RegExp(/^RELEASE$/);
-    }
-
-    if(regex.test(context.payload.pull_request.title)==false){
+    if(REGEX.test(context.payload.pull_request.title)==false){
         await github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: 'Title is not in a correct format'
+            body: TITLE_FORMAT_ERROR
         })
     
-        core.setFailed('Workflow Failed!') 
+        core.setFailed('❌Workflow Failed! cause: ' + TITLE_FORMAT_ERROR) 
     }
 
     if (context.payload.pull_request.body == null){
@@ -39,8 +43,8 @@ module.exports = ({github, context,core}) => {
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: 'PR Body can not be empty!'
+            body: PR_BODY_EMPTY_ERROR
         })
-        core.setFailed('Workflow Failed!') 
+        core.setFailed('❌Workflow Failed! cause: ' + PR_BODY_EMPTY_ERROR) 
     }
 }
