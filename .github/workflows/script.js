@@ -39,12 +39,18 @@ module.exports = async ({github, context, core}) => {
     }
 
     if (context.payload.pull_request.body == null){
+        await createComment(PR_BODY_EMPTY_ERROR)
+
+        core.setFailed('Workflow Failed! cause: ' + PR_BODY_EMPTY_ERROR) 
+    }
+
+    async function createComment(body) {
         await github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: PR_BODY_EMPTY_ERROR
+            body: body
         })
-        core.setFailed('Workflow Failed! cause: ' + PR_BODY_EMPTY_ERROR) 
     }
+
 }
