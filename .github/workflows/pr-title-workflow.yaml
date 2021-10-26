@@ -11,5 +11,5 @@ jobs:
     - uses: actions/github-script@v5
       with:
         script: |
-          const script = require('./.github/workflows/script.js')
+          const script = require('.github/workflows/script.js')
           console.log(script({github, context}))
