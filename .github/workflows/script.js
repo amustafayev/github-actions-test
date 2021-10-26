@@ -11,11 +11,10 @@ module.exports = async ({github, context, core}) => {
 
     if (context.payload.pull_request.base.ref === MAIN_BRANCH &&
         !context.payload.pull_request.title.toLowerCase().includes(MASTER_TITLE)) {
-            
         await createComment(MASTER_TITLE_FORMAT_ERROR)
 
         core.setFailed('Workflow Failed! cause: ' + MASTER_TITLE_FORMAT_ERROR)
-    } else if (regex.test(context.payload.pull_request.title) === false) {
+    } else if (context.payload.pull_request.base.ref !== MAIN_BRANCH && regex.test(context.payload.pull_request.title) === false) {
         await createComment(TITLE_FORMAT_ERROR)
 
         core.setFailed('Workflow Failed! cause: ' + TITLE_FORMAT_ERROR)
