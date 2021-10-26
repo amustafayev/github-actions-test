@@ -9,20 +9,19 @@ module.exports = async ({github, context, core}) => {
 
     var regex = new RegExp(TITLE_REGEX);
 
-    if(context.payload.pull_request.base.ref === MAIN_BRANCH &&
-                !context.payload.pull_request.title.toLowerCase().includes(MASTER_TITLE)){
+    if (context.payload.pull_request.base.ref === MAIN_BRANCH &&
+        !context.payload.pull_request.title.toLowerCase().includes(MASTER_TITLE)) {
+            
         await createComment(MASTER_TITLE_FORMAT_ERROR)
 
         core.setFailed('Workflow Failed! cause: ' + MASTER_TITLE_FORMAT_ERROR)
-    }
-
-    if(regex.test(context.payload.pull_request.title)===false){
+    } else if (regex.test(context.payload.pull_request.title) === false) {
         await createComment(TITLE_FORMAT_ERROR)
 
         core.setFailed('Workflow Failed! cause: ' + TITLE_FORMAT_ERROR)
     }
 
-    if (context.payload.pull_request.body == null){
+    if (context.payload.pull_request.body == null) {
         await createComment(PR_BODY_EMPTY_ERROR)
 
         core.setFailed('Workflow Failed! cause: ' + PR_BODY_EMPTY_ERROR)
