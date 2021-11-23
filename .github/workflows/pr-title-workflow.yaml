@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/github-script@v5
       with:
-        repo-token: ${{ secrets.TEST_GITHUB_ACTIONS }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const script = require('./.github/workflows/script.js');
           await script({github, context, core});
